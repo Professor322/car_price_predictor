@@ -26,7 +26,8 @@ class Item(BaseModel):
     def to_dict(self):
         return {
             'name': self.name,
-            'year': self.year, 
+            'year': self.year,
+            'selling_price' : self.selling_price,
             'km_driven': self.km_driven,
             'fuel': self.fuel,
             'seller_type': self.seller_type,
@@ -178,7 +179,7 @@ example_item2 = Item(name='Renault KWID RXT',
                     torque='72Nm@ 4386rpm',
                     seats=5.0)
 
-inference_runner = CarPriceInferenceRunner(prediction_model_coef_file='prediction_model_coef.pkl',
+inference_runner = CarPriceInferenceRunner(prediction_model_params='prediction_model_coef.pkl',
                                            std_scaler_file='scaler.pkl',
                                            ohe_file='encoder.pkl')
 
@@ -189,4 +190,40 @@ print(f'price: {price[0]}$')
 inference_runner.fit([example_item1, example_item2])
 price = inference_runner.predict()
 print(f'price: {price}')
+
+
+examples:
+[
+{
+"name": "Hyundai Grand i10 Sport",
+"year": 2017,
+"selling_price": 0,
+"km_driven": 35000,
+"fuel": "Petrol",
+"seller_type": "Individual",
+"transmission": "Manual",
+"owner": "First Owner",
+"mileage": "18.9 kmpl",
+"engine": "1197 CC",
+"max_power": "82 bhp",
+"torque": "114Nm@ 4000rpm",
+"seats": 5.0
+}
+,
+{
+"name": "Renault KWID RXT",
+"year": 2016,
+"km_driven": 20000,
+"selling_price": 0,
+"fuel": "Petrol",
+"seller_type": "Individual",
+"transmission": "Manual",
+"owner": "First Owner",
+"mileage": "25.17 kmpl",
+"engine": "799 CC",
+"max_power": "53.3 bhp",
+"torque": "72Nm@ 4386rpm",
+"seats": 5.0
+}
+]
 '''
